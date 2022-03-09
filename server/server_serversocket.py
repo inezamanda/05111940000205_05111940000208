@@ -18,11 +18,11 @@ class MyTCPHandler(socketserver.BaseRequestHandler):
     """
     def send_file(self, file_name):
         file_path = f"{DATASET}/{file_name}"
-        if os.path.exists(file_name):
+        if os.path.isfile(file_path):
             file_size = os.path.getsize(file_name)
             header = ("file-name: " + file_name + ",\nfile-size: " + str(file_size) + ",\n\n\n").encode('utf-8')
 
-            file = open(file_name, "rb")
+            file = open(file_path, "rb")
             self.request.send("File is found".encode('utf-8'))
             sleep(0.05)
             data = file.read(BUFFER_SIZE - len(header))
@@ -37,9 +37,9 @@ class MyTCPHandler(socketserver.BaseRequestHandler):
                 else:
                     break
             file.close()
-            print(f'[SENDING] Server is sending file {file_name}')
+            print(f'SENDING --> Server is sending file { file_name }')
         else:
-            print(f'[ERROR] Server failed to send file { file_name }')
+            print(f'ERROR --> Server failed to send file { file_name }')
             self.request.send("File is not found".encode('utf-8'))
 
     def handle(self):
@@ -50,7 +50,7 @@ class MyTCPHandler(socketserver.BaseRequestHandler):
                 print(filename)
                 send_file(self, filename)
             except ConnectionAbortedError:
-                print("Connection Aborted by client")
+                print("Connection aborted by client")
                 break
 
 if __name__ == "__main__":

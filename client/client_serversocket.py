@@ -21,7 +21,7 @@ def receive(msg):
             file.write(tail)
         else:
             file.write(data)
-        if(len(data) > 1024):
+        if(len(data) > BUFFER_SIZE):
             data = client.recv(BUFFER_SIZE)
         else:
             break
@@ -35,7 +35,8 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as client:
     client.connect((HOST, PORT))
     try:
         while True:
-            command = input("Enter command: ")
+            print("To download a file please enter command 'unduh <file_name>'")
+            command = input(">> ")
             messages = command.split()
             if messages[0].__eq__("unduh"):
                 send_msg(messages[1])

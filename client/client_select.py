@@ -18,15 +18,17 @@ def receive(msg):
     while True:
         data = client_socket.recv(BUFFER_SIZE)
         file.write(data)
-        if(len(data) > 1024):
+        if(len(data) > BUFFER_SIZE):
             data = client_socket.recv(BUFFER_SIZE)
         else:
             break
     file.close
+    print("Download success Yeyy")
 
 try:
+    print("To download a file please enter command 'unduh <file_name>'")
     while True:
-        command = input("Enter command: ")
+        command = input(">> ")
         messages = command.split()
         if messages[0].__eq__("unduh"):
             send_msg(messages[1])

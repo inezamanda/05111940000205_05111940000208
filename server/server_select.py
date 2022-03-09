@@ -20,8 +20,8 @@ input_socket = [server_socket]
 
 def send_file(file_name):
     file_path = f"{DATASET}/{file_name}"
-    if os.path.exists(file_name):
-        file = open(file_name, "rb")
+    if os.path.isfile(file_path):
+        file = open(file_path, "rb")
         sock.send("File is found".encode('utf-8'))
         sleep(0.05)
         data = file.read(BUFFER_SIZE)
@@ -34,12 +34,13 @@ def send_file(file_name):
             else:
                 break
         file.close()
-        print(f'[SENDING] Server is sending file {file_name}')
+        print(f'SENDING --> Server is sending file { file_name }')
     else:
-        print(f'[ERROR] Server failed to send file { file_name }')
+        print(f'ERROR --> Server failed to send file {file_name}')
         sock.send("File is not found".encode('utf-8'))
 
 try:
+    print("START SERVER")
     while True:
         read_ready, write_ready, exception = select.select(input_socket, [], [])
         
@@ -53,7 +54,6 @@ try:
                 filename = sock.recv(BUFFER_SIZE).decode('utf-8')
                 print(filename)
                 send_file(filename)
-
 
 except KeyboardInterrupt:  
     print('Server Closed')      
