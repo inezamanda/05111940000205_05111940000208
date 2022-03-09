@@ -5,6 +5,7 @@
 |    :----                          |    :----       |
 | Aji Rindra Fakhrezi Putra Faisal  | 05111940000205 |
 | Inez Yulia Amanda                 | 05111940000208 |
+
 ## Task
 
 ### Klien
@@ -23,7 +24,30 @@
 4. Mengirim isi file yang telah dibaca ke klien
 5. Server dapat menangani banyak klien (gunakan modul select DAN serversocket pada Python).
 
-Challenge:
+### Challenge:
 1. Membaca/menulis file dalam mode biner.
 2. Mengirim/menerima file yang ukurannya lebih besar daripada buffer pada socket (gunakan loop untuk send/recv
 3. Menggunakan virtual box untuk simulasi dua host atau lebih.
+
+## How To Run
+1. Go to folder named "server" with command 
+    ```
+    cd server
+    ```
+2. Run the server first with command 
+    ```
+    python3 server_select.py
+    ```
+2. Go to folder named "client" with command
+    ```
+    cd client
+    ```
+    , then run the client by using command 
+    ```
+    python3 client_select.py
+    ```
+    or just use command 
+    ```
+    python3 client/client_select.py
+    ``` 
+    if you don't want to go to folder "client"
