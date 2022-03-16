@@ -18,7 +18,7 @@ def receive(msg):
     while True:
         data = client_socket.recv(BUFFER_SIZE)
         file.write(data)
-        if(len(data) > BUFFER_SIZE):
+        if(len(data) >= BUFFER_SIZE):
             data = client_socket.recv(BUFFER_SIZE)
         else:
             break

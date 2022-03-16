@@ -18,11 +18,11 @@ def receive(data, msg):
             file.write(tail)
         else:
             file.write(data)
-        if(len(data) > BUFFER_SIZE):
+        if(len(data) >= BUFFER_SIZE):
             data = client.recv(BUFFER_SIZE)
         else:
             break
-        i += 1
+        idx += 1
     file.close
     print("Download success Yeyy\n")
 

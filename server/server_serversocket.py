@@ -22,7 +22,7 @@ def send_file(self, file_name):
             self.request.send(data)
 
             # syarat file 1MB
-            if(len(data) > BUFFER_SIZE):
+            if(len(data) >= BUFFER_SIZE):
                 data = file.read(BUFFER_SIZE)
             else:
                 break

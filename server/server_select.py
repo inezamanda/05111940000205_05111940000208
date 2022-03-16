@@ -29,7 +29,7 @@ def send_file(file_name):
             sock.send(data)
 
             # syarat file 1MB
-            if(len(data) > BUFFER_SIZE):
+            if(len(data) >= BUFFER_SIZE):
                 data = file.read(BUFFER_SIZE)
             else:
                 break
