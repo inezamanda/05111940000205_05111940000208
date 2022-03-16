@@ -1,46 +1,37 @@
 import socket
 import sys
 
-HOST = "127.0.0.1"
-PORT = 5000
-BUFFER_SIZE = 1024
-
-server_address = (HOST, PORT)
+server_address = ('127.0.0.1', 5000)
 client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 client_socket.connect(server_address)
 
-def send_msg(msg):
-    message = msg.encode('utf-8')
-    client_socket.send(message)
 
-def receive(msg):
-    file = open(msg, "wb")
-    while True:
-        data = client_socket.recv(BUFFER_SIZE)
-        file.write(data)
-        if(len(data) >= BUFFER_SIZE):
-            data = client_socket.recv(BUFFER_SIZE)
-        else:
-            break
-    file.close
-    print("Download success Yeyy")
 
 try:
-    print("To download a file please enter command 'unduh <file_name>'")
     while True:
-        command = input(">> ")
-        messages = command.split()
-        if messages[0].__eq__("unduh"):
-            send_msg(messages[1])
-            data = client_socket.recv(BUFFER_SIZE)
-            print(data)
-
-            if (data.decode('utf-8').__eq__("File is not found")):
-                print(data.decode('utf-8'))
+        message = input("Enter command: ")
+        messages = message.split()
+        if messages[0] == "unduh":
+            client_socket.send(messages[1].encode('utf-8'))
+            l = client_socket.recv(1024)
+            print(l)
+            if (l.decode('utf-8') == "File tidak ditemukan"):
+                print(l.decode('utf-8'))
             else:
-                receive(messages[1])
+                # i = 0 
+                file = open(messages[1], "wb")
+                l = client_socket.recv(1024)
+                while l: 
+                    file.write(l)
+                    if (len(l) < 1024):
+                        break
+                    else: 
+                        l = client_socket.recv(1024)
+                    # print("loop" + str(i))
+                    # i+=1
+                file.close()
         else: 
-            print ("Command not recognized")
+            print ("Command tidak dikenali")
 
 except KeyboardInterrupt:
     print("Disconnnected from " + str(client_socket.getpeername()))
